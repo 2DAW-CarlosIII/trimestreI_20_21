@@ -19,4 +19,8 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/modulos', [ModulosController::class, 'index'])->name('modulos');
+Route::group(['prefix' => 'modulos'], function () {
+    Route::get('/', [ModulosController::class, 'index'])->name('modulos.lista');
+    Route::get('/edit/{id}', [ModulosController::class, 'edit'])->name('modulos.editar');
+    Route::post('/', [ModulosController::class, 'store'])->name('modulos.guardar');
+});
