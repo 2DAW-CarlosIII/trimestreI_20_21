@@ -31,18 +31,18 @@ class ModulosController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -53,30 +53,43 @@ class ModulosController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @param int $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function edit($id)
     {
-        return view('edit');
+        $modulo = Modulos::find($id);
+        if (!$modulo) {
+            return redirect()->route('modulos.lista');  //Si el módulo no existe, redirige a la tabla de módulos para evitar problemas.
+        }
+
+        return view('edit', compact('modulo'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        if ($request != null) {
+            $modulo = Modulos::find($request->id);
+            if (!$modulo) {
+                return redirect()->route('modulos.lista');  //Si el módulo no existe, redirige a la tabla de módulos para evitar problemas.
+            } else {
+                $modulo->fill($request->only("nombre", "especialidad", "ciclo"));
+                $modulo->save();
+            }
+        }
+        return redirect()->route('modulos.lista'); //Redirigimos para que el usuario vea los cambios
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

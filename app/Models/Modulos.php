@@ -9,6 +9,10 @@ class Modulos extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+      'nombre', 'especialidad_id', 'ciclo_id'
+    ];
+
     public function especialidad(){
         return $this->belongsTo(Especialidad::class);
     }

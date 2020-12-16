@@ -8,19 +8,22 @@
                     <h3>{{ __('Editar Módulo') }}</h3>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="#">
+                    <form method="post" action="{{route('modulos.actualizar')}}">
+                        @csrf
+                        @method('PUT')
                         <div class="row gtr-uniform">
                             <div class="col-3 col-12-xsmall">
-                                <input type="number" name="id" id="id" value="" placeholder="C&oacute;digo">
+                                <!-- Es la primary key, no se deberia poder editar -->
+                                <input type="number" name="id" id="id" value="{{$modulo->id}}" placeholder="C&oacute;digo" readonly>
                             </div>
                             <div class="col-12 col-12-xsmall">
-                                <input type="text" name="nombre" id="nombre" value="" placeholder="Nombre">
+                                <input type="text" name="nombre" id="nombre" value="{{$modulo->nombre}}" placeholder="Nombre">
                             </div>
                             <div class="col-3 col-12-xsmall">
-                                <input type="number" name="especialidad" id="especialidad" value="" placeholder="Especialidad" min="1" max="2">
+                                <input type="number" name="especialidad" id="especialidad" value="{{$modulo->especialidad_id}}" placeholder="Especialidad" min="1" max="2">
                             </div>
                             <div class="col-3 col-12-xsmall">
-                                <input type="number" name="ciclo" id="ciclo" value="" placeholder="Ciclo" min="1" max="6">
+                                <input type="number" name="ciclo" id="ciclo" value="{{$modulo->ciclo_id}}" placeholder="Ciclo" min="1" max="6">
                             </div>
                             <div class="col-12">
                                 <ul class="actions">
