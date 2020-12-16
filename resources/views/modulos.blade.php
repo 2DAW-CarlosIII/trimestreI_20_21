@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card" align="center">
                 <div class="card-header">
                     <h3>{{ __('Desarrollo de Aplicaciones Web') }}</h3>
@@ -19,7 +19,7 @@
                         @foreach($modulos as $modulo)
                         <tr>
                             <th>{{$modulo->nombre}}</th>
-                            <th>{{$modulo->especialidad_id}}</th>
+                            <th>{{$modulo->especialidad_id}} ({{$modulo->especialidad->nombre}})</th>
                         </tr>
                         @endforeach
                         </tbody>
