@@ -21,6 +21,6 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::group(['prefix' => 'modulos'], function () {
     Route::get('/', [ModulosController::class, 'index'])->name('modulos.lista');
-    Route::get('/edit/{id}', [ModulosController::class, 'edit'])->name('modulos.editar');
-    Route::put('/', [ModulosController::class, 'update'])->name('modulos.actualizar');
+    Route::get('/edit/{id}', [ModulosController::class, 'edit'])->middleware('auth')->name('modulos.editar');
+    Route::put('/', [ModulosController::class, 'update'])->middleware('auth')->name('modulos.actualizar');
 });
