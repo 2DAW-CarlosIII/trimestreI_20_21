@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
@@ -14,17 +15,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(EspecialidadesSeeder::class);
-        $this->call(CiclosSeeder::class);
-        $this->call(ModulosSeeder::class);
         Schema::disableForeignKeyConstraints();
         //
         Schema::enableForeignKeyConstraints();
+
+        foreach ($this->arrayCiclos as $ciclos) {
+            DB::table('ciclos')->insert(array(
+                'grado' => $ciclos['grado'],
+                'nombre' => $ciclos['nombre']));
+        }
+
+        foreach ($this->arrayEspecialidades as $especialidades) {
+            DB::table('especialidades')->insert(array('nombre' => $especialidades));
+        }
+
+        foreach ($this->arrayModulos as $modulos) {
+            if ($modulos['ciclo'] == 6) { // Comprobación de que los modulos son del ciclo 6
+                DB::table('modulos')->insert(array(
+                    'nombre' => $modulos['nombre'],
+                    'especialidad_id' => $modulos['especialidad'],
+                    'ciclo_id' => $modulos['ciclo']));
+            }
+        }
     }
 
-    private static $arrayEspecialidades = ['Informática', 'Sistemas y Aplicaciones Informáticas'];
+    private $arrayEspecialidades = ['Informática', 'Sistemas y Aplicaciones Informáticas'];
 
-    private static $arrayCiclos = [
+    private $arrayCiclos = [
         array("grado" =>'FPB', "nombre" =>"Informática de Oficina"),
         array("grado" =>'FPB', "nombre" =>"Informática y Comunicaciones"),
         array("grado" =>'GM', "nombre" =>"Sistemas Microinformáticos y Redes"),
@@ -33,7 +50,7 @@ class DatabaseSeeder extends Seeder
         array("grado" =>'GS', "nombre" =>"Desarrollo de Aplicaciones Web")
     ];
 
-    private static $arrayModulos = [
+    private $arrayModulos = [
         array("nombre" =>"Ofimática y archivo de documentos", "especialidad" =>"2", "ciclo" =>"1"),
         array("nombre" =>"Montaje y mantenimiento de sistemas y componentes informáticos", "especialidad" =>"2", "ciclo" =>"1"),
         array("nombre" =>"Instalación y mantenimiento de redes para transmisión de datos", "especialidad" =>"2", "ciclo" =>"1"),
