@@ -14,7 +14,7 @@ class ModulosController extends Controller
      */
     public function index()
     {
-        $modulos = Modulos::all();
+        $modulos = Modulos::all(); //Obtenemos todos los módulos de la BD.
         return view('modulos', compact('modulos'));
     }
 
@@ -58,7 +58,7 @@ class ModulosController extends Controller
      */
     public function edit($id)
     {
-        $modulo = Modulos::find($id);
+        $modulo = Modulos::find($id); //Bucamos el módulo por su ID (La PK de la tabla)
         if (!$modulo) {
             return redirect()->route('modulos.lista');  //Si el módulo no existe, redirige a la tabla de módulos para evitar problemas.
         }
@@ -75,12 +75,12 @@ class ModulosController extends Controller
     public function update(Request $request)
     {
         if ($request != null) {
-            $modulo = Modulos::find($request->id);
+            $modulo = Modulos::find($request->id); //Si la request no es null, buscamos el módulo con esa id
             if (!$modulo) {
                 return redirect()->route('modulos.lista');  //Si el módulo no existe, redirige a la tabla de módulos para evitar problemas.
             } else {
-                $modulo->fill($request->only("nombre", "especialidad_id", "ciclo_id"));
-                $modulo->save();
+                $modulo->fill($request->only("nombre", "especialidad_id", "ciclo_id")); //Actualizamos únicamente esos 3 campos, no tiene sentido modificar la PK.
+                $modulo->save(); //Guardamos los cambios
             }
         }
         return redirect()->route('modulos.lista'); //Redirigimos para que el usuario vea los cambios
