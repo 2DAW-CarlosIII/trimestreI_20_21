@@ -20,10 +20,10 @@
                                 <input type="text" name="nombre" id="nombre" value="{{$modulo->nombre}}" placeholder="Nombre">
                             </div>
                             <div class="col-3 col-12-xsmall">
-                                <input type="number" name="especialidad" id="especialidad" value="{{$modulo->especialidad_id}}" placeholder="Especialidad" min="1" max="2">
+                                <input type="number" name="especialidad_id" id="especialidad" value="{{$modulo->especialidad_id}}" placeholder="Especialidad" min="1" max="2">
                             </div>
                             <div class="col-3 col-12-xsmall">
-                                <input type="number" name="ciclo" id="ciclo" value="{{$modulo->ciclo_id}}" placeholder="Ciclo" min="1" max="6">
+                                <input type="number" name="ciclo_id" id="ciclo" value="{{$modulo->ciclo_id}}" placeholder="Ciclo" min="1" max="6">
                             </div>
                             <div class="col-12">
                                 <ul class="actions">

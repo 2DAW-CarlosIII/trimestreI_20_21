@@ -79,7 +79,7 @@ class ModulosController extends Controller
             if (!$modulo) {
                 return redirect()->route('modulos.lista');  //Si el módulo no existe, redirige a la tabla de módulos para evitar problemas.
             } else {
-                $modulo->fill($request->only("nombre", "especialidad", "ciclo"));
+                $modulo->fill($request->only("nombre", "especialidad_id", "ciclo_id"));
                 $modulo->save();
             }
         }
