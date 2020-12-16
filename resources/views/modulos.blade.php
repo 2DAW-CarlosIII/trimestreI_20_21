@@ -8,40 +8,13 @@
                     <h3>{{ __('Desarrollo de Aplicaciones Web') }}</h3>
                 </div>
                 <div class="card-body">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Especialidad</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th>Sistemas informáticos</th>
-                            <th>2</th>
-                        </tr>
-                        <tr>
-                            <th>Bases de Datos</th>
-                            <th>1</th>
-                        </tr>
-                        <tr>
-                            <th>Programación</th>
-                            <th>1</th>
-                        </tr>
-                        <tr>
-                            <th>Entornos de desarrollo</th>
-                            <th>1</th>
-                        </tr>
-                        <tr>
-                            <th>Lenguajes de marcas y sistemas de gestión de información</th>
-                            <th>1</th>
-                        </tr>
-                        <tr>
-                            <th>...</th>
-                            <th>...</th>
-                        </tr>
-                        </tbody>
-                    </table>
+                    @foreach( $arrayModulos as $key => $modulo )
+                    <div class="col-xs-6 col-sm-4 col-md-3 text-center">
+                            <p>{{$modulo->nombre}}</p>
+                            <p>{{$modulo->especialidad_id}}</p>
+                            <p>{{$modulo->ciclo_id}}</p>
+                    </div>
+                    @endforeach
                 </div>
                 <div class="card-footer">
                     <a href="/" class="button medium scrolly">Home</a>

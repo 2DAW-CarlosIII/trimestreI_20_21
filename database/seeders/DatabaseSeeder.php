@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ciclo;
+use App\Models\Especialidad;
+use App\Models\Modulos;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -17,7 +20,46 @@ class DatabaseSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         //
         Schema::enableForeignKeyConstraints();
+        self::seedEspecialidades();
+        self::seedCiclos();
+        self::seedModulos();
+        $this->command->info('Tablas Especialidades, Ciclos, Modulos inicializadas con datos!');
     }
+
+    private static function seedEspecialidades()
+    {
+    	Especialidad::truncate();
+        $especialidad1 = new Especialidad();
+        $especialidad1 -> nombre = 'Informática';
+        $especialidad1->save();
+        $especialidad2 = new Especialidad();
+        $especialidad2 -> nombre = 'Sistemas y Aplicaciones Informáticas';
+        $especialidad2->save();
+    }
+
+    private static function seedCiclos()
+    {
+    	Ciclo::truncate();
+    	foreach( self::$arrayCiclos as $ciclo ) {
+		    $c = new Ciclo();
+            $c->grado = $ciclo['grado'];
+            $c->nombre = $ciclo['nombre'];
+		    $c->save();
+		}
+    }
+
+    private static function seedModulos()
+    {
+    	Modulos::truncate();
+    	foreach( self::$arrayModulos as $modulo ) {
+		    $m = new Modulos();
+            $m->nombre = $modulo['nombre'];
+            $m->especialidad_id = $modulo['especialidad'];
+            $m->ciclo_id = $modulo['ciclo'];#::where('ciclo', '=', 6)
+		    $m->save();
+		}
+    }
+
 
     private static $arrayEspecialidades = ['Informática', 'Sistemas y Aplicaciones Informáticas'];
 
