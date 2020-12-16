@@ -4,6 +4,11 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Modulo;
+use App\Models\Ciclo;
+use App\Models\Especialidad;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,9 +19,57 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Model::unguard();
         Schema::disableForeignKeyConstraints();
-        //
+
+        self::seedModulos();
+        self::seedEspecialidades();
+        self::seedCiclos();
+        self::seedUsers();
+
+        Model::reguard();
         Schema::enableForeignKeyConstraints();
+    }
+
+    public static function seedModulos(){
+        Modulo::truncate();
+        foreach (self::$arrayModulos as $moduloAInsertar) {
+            if($moduloAInsertar['ciclo'] == 6){
+                $modulo = new Modulo();
+                $modulo->nombre = $moduloAInsertar['nombre'];
+                $modulo->especialidad_id = $moduloAInsertar['especialidad'];
+                $modulo->ciclo_id = $moduloAInsertar['ciclo'];
+                $modulo->save();
+            }
+        }
+    }
+
+    public static function seedCiclos(){
+        Ciclo::truncate();
+        foreach (self::$arrayCiclos as $cicloAInsertar) {
+            $ciclo = new Ciclo();
+            $ciclo->grado = $cicloAInsertar['grado'];
+            $ciclo->nombre = $cicloAInsertar['nombre'];
+            $ciclo->save();
+        }
+    }
+
+    public static function seedEspecialidades(){
+        Especialidad::truncate();
+        foreach (self::$arrayEspecialidades as $key => $especialidadAInsertar) {
+            $especialidad = new Especialidad();
+            $especialidad->nombre = $especialidadAInsertar[$key];
+            $especialidad->save();
+        }
+    }
+
+    public static function seedUsers(){
+        User::truncate();
+        $usuario = new User();
+        $usuario->name = 'Pablo';
+        $usuario->email = '1793960@algo.es';
+        $usuario->password = '12345678';
+        $usuario->save();
     }
 
     private static $arrayEspecialidades = ['Informática', 'Sistemas y Aplicaciones Informáticas'];

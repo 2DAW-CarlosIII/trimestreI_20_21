@@ -4,11 +4,32 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card" align="center">
+
+                <div class="card-body">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Especialidad</th>
+                            <th>Ciclo id</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{ $modulo->nombre }}</th>
+                            <td>{{ $modulo->especialidad_id }}</td>
+                            <td>{{ $modulo->ciclo_id }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 <div class="card-header">
                     <h3>{{ __('Editar Módulo') }}</h3>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="#">
+                    <form method="post" action="{{ action('App\Http\Controllers\ModulosController@getIndex') }}">
+                        {{ method_field('PUT') }}
                         <div class="row gtr-uniform">
                             <div class="col-3 col-12-xsmall">
                                 <input type="number" name="id" id="id" value="" placeholder="C&oacute;digo">
