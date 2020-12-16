@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(EspecialidadesSeeder::class);
         $this->call(CiclosSeeder::class);
+        $this->call(ModulosSeeder::class);
         Schema::disableForeignKeyConstraints();
         //
         Schema::enableForeignKeyConstraints();
