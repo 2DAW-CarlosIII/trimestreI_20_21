@@ -12,8 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', 'App\Http\Controllers\HomeController@index');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => 'auth'], function(){
+Route::get('modulos/edit/{id}', 'App\Http\Controllers\ModulosController@getEdit');
+Route::put('modulos/edit/', 'App\Http\Controllers\ModulosController@putEdit');
 
-
+});
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
