@@ -11,35 +11,17 @@
                     <table>
                         <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Especialidad</th>
+                            <th><b>Nombre</b></th>
+                            <th><b>Especialidad</b></th>
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($modulos as $modulo)
                         <tr>
-                            <th>Sistemas informáticos</th>
-                            <th>2</th>
+                            <th>{{$modulo->nombre}}</th>
+                            <th>{{$modulo->especialidad_id}}</th>
                         </tr>
-                        <tr>
-                            <th>Bases de Datos</th>
-                            <th>1</th>
-                        </tr>
-                        <tr>
-                            <th>Programación</th>
-                            <th>1</th>
-                        </tr>
-                        <tr>
-                            <th>Entornos de desarrollo</th>
-                            <th>1</th>
-                        </tr>
-                        <tr>
-                            <th>Lenguajes de marcas y sistemas de gestión de información</th>
-                            <th>1</th>
-                        </tr>
-                        <tr>
-                            <th>...</th>
-                            <th>...</th>
-                        </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
