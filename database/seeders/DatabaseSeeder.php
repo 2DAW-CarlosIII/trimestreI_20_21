@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
+use Psy\Util\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -37,6 +39,11 @@ class DatabaseSeeder extends Seeder
                     'ciclo_id' => $modulos['ciclo']));
             }
         }
+
+        DB::table('users')->insert(array(
+            'name' => 'Pablo',
+            'email' => '1754730@alu.murciaeduca.es',
+            'password' => Hash::make('123456')));
     }
 
     private $arrayEspecialidades = ['Informática', 'Sistemas y Aplicaciones Informáticas'];
