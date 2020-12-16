@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="row justify-content-center">
+
+        @foreach ($arrayModulos as $key => $modulo)
+
         <div class="col-md-8">
             <div class="card" align="center">
                 <div class="card-header">
@@ -11,8 +14,9 @@
                     <table>
                         <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Especialidad</th>
+                            <th>Nombre</th> {{$modulo->nombre}}
+                            <th>Especialidad</th> {{$modulo->especialidad}}
+                            <th>Ciclo</th> {{$modulo->ciclo}}
                         </tr>
                         </thead>
                         <tbody>
@@ -48,5 +52,6 @@
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
 @endsection
