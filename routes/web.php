@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('/modulos', 'App\Http\Controllers\modulosController@index');
+
+Route::get('/modulos/edit/{id}', 'App\Http\Controllers\modulosController@getEdit');
+
+Route::put('/modulos/edit', 'App\Http\Controllers\modulosController@putEdit');

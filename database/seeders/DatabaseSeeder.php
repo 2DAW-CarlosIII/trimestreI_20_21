@@ -4,6 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Ciclo;
+use App\Models\Especialidad;
+use App\Models\Modulo;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,13 +18,57 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Schema::disableForeignKeyConstraints();
+        //Schema::disableForeignKeyConstraints();
         //
-        Schema::enableForeignKeyConstraints();
+        //Schema::enableForeignKeyConstraints();
+        self::seedCiclos();
+        self::seedEspecialidades();
+        self::seedModulos();
+        $this->command->info('Tabla inicializada con datos');
     }
 
+    private static function seedCiclos(){
+        Ciclo::truncate();
+
+        foreach (self::$arrayCiclos as $ciclo){
+            $c = new Ciclo;
+            $c->nombre = $ciclo['nombre'];
+            $c->grado = $ciclo['grado'];
+            $c->save();
+        }
+
+    }
+
+    private static function seedEspecialidades(){
+        Especialidad::truncate();
+
+        foreach (self::$arrayEspecialidades as $especialidad){
+            $sp = new Especialidad;
+            $sp->nombre = $especialidad[0];
+            $sp->save();
+        }
+
+    }
+
+    private static function seedModulos(){
+        Modulo::truncate();
+
+        foreach (self::$arrayModulos as $modulo){
+            if($modulo['ciclo'] == "6"){
+                $m = new Modulo;
+                $m->nombre = $modulo['nombre'];
+                $m->especialidad_id = $modulo['especialidad'];
+                $m->ciclo_id = $modulo['ciclo'];
+                $m->save();
+            }
+        }
+    }
+
+
+    //Trasladar entero
     private static $arrayEspecialidades = ['Informática', 'Sistemas y Aplicaciones Informáticas'];
 
+    //Trasladar entero
     private static $arrayCiclos = [
         array("grado" =>'FPB', "nombre" =>"Informática de Oficina"),
         array("grado" =>'FPB', "nombre" =>"Informática y Comunicaciones"),
@@ -29,7 +77,7 @@ class DatabaseSeeder extends Seeder
         array("grado" =>'GS', "nombre" =>"Desarrollo de Aplicaciones Multiplataforma"),
         array("grado" =>'GS', "nombre" =>"Desarrollo de Aplicaciones Web")
     ];
-
+    //Trasladar solo los de codigo 6
     private static $arrayModulos = [
         array("nombre" =>"Ofimática y archivo de documentos", "especialidad" =>"2", "ciclo" =>"1"),
         array("nombre" =>"Montaje y mantenimiento de sistemas y componentes informáticos", "especialidad" =>"2", "ciclo" =>"1"),
