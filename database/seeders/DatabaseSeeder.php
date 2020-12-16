@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Especialidad;
+use App\Models\Ciclo;
+use App\Models\Modulo;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -15,9 +19,70 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        //
+
+        self::seedEspecialidades();
+        $this->command->info('Tabla de especialidades incializada con datos!');
+
+        self::seedCiclos();
+        $this->command->info('Tabla ciclos inicializada con datos!');
+
+        self::seedModulos();
+        $this->command->info('Tabla modulos inicializada con datos!');
+
+        self::seedUser();
+        $this->command->info('Tabla Usuarios inicializada con datos!');
+
         Schema::enableForeignKeyConstraints();
     }
+
+
+    private static function seedEspecialidades(){
+        Especialidad::truncate();
+        foreach( self::$arrayEspecialidades as $especialidad) {
+		    $p = new Especialidad();
+		    $p->nombre = $especialidad[0];
+		    $p->save();
+		}
+
+    }
+
+    private static function seedCiclos(){
+        Ciclo::truncate();
+        foreach( self::$arrayCiclos as $ciclo) {
+		    $p = new Ciclo();
+            $p->nombre = $ciclo["nombre"];
+            $p->grado =$ciclo["grado"];
+		    $p->save();
+		}
+
+    }
+
+    private static function seedModulos(){
+        Modulo::truncate();
+        foreach( self::$arrayModulos as $modulo) {
+            if($modulo["ciclo"]==6){
+		        $p = new Modulo();
+                $p->nombre = $modulo["nombre"];
+                $p->especialidad_id = $modulo["especialidad"];
+                $p->ciclo_id = $modulo["ciclo"];
+                $p->save();
+            }
+		}
+
+    }
+
+    private static function seedUser(){
+        User::truncate();
+        $u=new User();
+        $u->name = "Carlos";
+        $u->email ="Carlos@mail.com";
+        $u->password = bcrypt('password');
+        $u->save();
+    }
+
+
+
+
 
     private static $arrayEspecialidades = ['Informática', 'Sistemas y Aplicaciones Informáticas'];
 

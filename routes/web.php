@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\Modulo;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +20,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/modulos','App\Http\Controllers\ModulosController@index');
+
+Route::put('/modulos', 'App\Http\Controllers\ModulosController@putModulo');
+
+Route::get('/modulos/edit/{id}', function($id){
+    return view('edit',array('modulo'=>Modulo::findOrFail($id)));
+})->middleware('auth');
+
