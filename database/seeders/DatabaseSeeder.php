@@ -2,6 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Ciclo;
+use App\Models\Especialidad;
+use App\Models\Modulo;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -15,11 +20,48 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Schema::disableForeignKeyConstraints();
-        //
+
+        self::seedEspecialidades();
+        $this->command->info('Tabla Especialidades inicializada con datos!');
+
+        self::seedCiclos();
+        $this->command->info('Tabla Ciclos inicializada con datos!');
+
+        self::seedModulos();
+        $this->command->info('Tabla Modulos inicializada con datos!');
+
+        self::seedUser();
+        $this->command->info('Tabla Users inicializada con datos');
+
         Schema::enableForeignKeyConstraints();
     }
 
+//-----------------------------------------
+//---------TABLA ESPECIALIDADES------------
+//-----------------------------------------
+    public function seedEspecialidades(){
+        Especialidad::truncate();
+        foreach(self::$arrayEspecialidades as $especialidad){
+            $especialidadNueva = new Especialidad;
+            $especialidadNueva->nombre = $especialidad;
+            $especialidadNueva->save();
+        }
+    }
+
     private static $arrayEspecialidades = ['Informática', 'Sistemas y Aplicaciones Informáticas'];
+
+//-----------------------------------------
+//-------------TABLA CICLOS----------------
+//-----------------------------------------
+    public function seedCiclos(){
+        Ciclo::truncate();
+        foreach(self::$arrayCiclos as $ciclo){
+            $cicloNuevo = new Ciclo;
+            $cicloNuevo->grado = $ciclo['grado'];
+            $cicloNuevo->nombre = $ciclo['nombre'];
+            $cicloNuevo->save();
+        }
+    }
 
     private static $arrayCiclos = [
         array("grado" =>'FPB', "nombre" =>"Informática de Oficina"),
@@ -29,6 +71,23 @@ class DatabaseSeeder extends Seeder
         array("grado" =>'GS', "nombre" =>"Desarrollo de Aplicaciones Multiplataforma"),
         array("grado" =>'GS', "nombre" =>"Desarrollo de Aplicaciones Web")
     ];
+
+//-----------------------------------------
+//------------TABLA MODULOS----------------
+//-----------------------------------------
+    public function seedModulos(){
+        Modulo::truncate();
+
+        foreach (self::$arrayModulos as $modulo){
+            if($modulo['ciclo'] == "6"){
+                $moduloNuevo = new Modulo;
+                $moduloNuevo->nombre = $modulo['nombre'];
+                $moduloNuevo->especialidad_id = $modulo['especialidad'];
+                $moduloNuevo->ciclo_id = $modulo['ciclo'];
+                $moduloNuevo->save();
+            }
+        }
+    }
 
     private static $arrayModulos = [
         array("nombre" =>"Ofimática y archivo de documentos", "especialidad" =>"2", "ciclo" =>"1"),
@@ -82,6 +141,21 @@ class DatabaseSeeder extends Seeder
         array("nombre" =>"Despliegue de aplicaciones web", "especialidad" =>"1", "ciclo" =>"6"),
         array("nombre" =>"Diseño de interfaces web", "especialidad" =>"2", "ciclo" =>"6")
     ];
+
+//-----------------------------------------
+//-------------TABLA USERS-----------------
+//-----------------------------------------
+
+    public function seedUser(){
+        User::truncate();
+
+        User::create([
+            'name' => 'joseenrique',
+            'email' => '5514134@alu.murciaeduca.es',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now()
+        ]);
+    }
 
 
 }
